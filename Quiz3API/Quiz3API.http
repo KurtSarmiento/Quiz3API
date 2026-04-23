@@ -1,9 +1,18 @@
 @Quiz3API_HostAddress = http://localhost:5269
-@AdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNzc2OTQ3OTc5LCJleHAiOjE3NzY5NDgyNzksImlhdCI6MTc3Njk0Nzk3OX0.meuznwVUM89qXElPhYpju2NhxuFYHq9G5b7qh3ri4bg
-@UserToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXIiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc3Njk0Nzk5MSwiZXhwIjoxNzc2OTQ4MjkxLCJpYXQiOjE3NzY5NDc5OTF9.KHtxw-YFRoXNF_O_nEDDH_jECKkwxMf4a662su4Jn5A
+@AdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNzc2OTQ4NjE5LCJleHAiOjE3NzY5NDg5MTgsImlhdCI6MTc3Njk0ODYxOX0.AdN-tRR4s1ltZyDe8Oy2__H4PH-uqI_NfvLk7OMlSc0
+@UserToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXIiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc3Njk0ODYyOSwiZXhwIjoxNzc2OTQ4OTI5LCJpYXQiOjE3NzY5NDg2Mjl9.QKjlFsvLX9tW7miqYvW9L8jFE25j5lTwquMH82Sov_Y
 
-###
+### to login as admin
+POST {{Quiz3API_HostAddress}}/api/auth/login
+X-API-KEY: MYAPIKEY
+Content-Type: application/json
 
+{
+  "username": "admin",
+  "password": "1234"
+}
+
+### to login as user
 POST {{Quiz3API_HostAddress}}/api/auth/login
 X-API-KEY: MYAPIKEY
 Content-Type: application/json
@@ -13,34 +22,76 @@ Content-Type: application/json
   "password": "1234"
 }
 
-###
+### logging in without api key
+POST {{Quiz3API_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "1234"
+}
+
+### logging in with invalid api key
+POST {{Quiz3API_HostAddress}}/api/auth/login
+X-API-KEY: SARMIENTO
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "1234"
+}
+
+### logging in with expired api key
+POST {{Quiz3API_HostAddress}}/api/auth/login
+X-API-KEY: MYEXPIREDKEY
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "1234"
+}
+
+### get tasks (either admin or user)
 GET {{Quiz3API_HostAddress}}/api/tasks
 Authorization: Bearer {{AdminToken}}
 
-###
-
-GET {{Quiz3API_HostAddress}}/api/tasks/1
-Authorization: Bearer {{UserToken}}
-
-###
-
+### create new task (either admin or user)
 POST {{Quiz3API_HostAddress}}/api/tasks
 Authorization: Bearer {{UserToken}}
 Content-Type: application/json
 {
-  "title": "New Task 3",
+  "title": "Maging mabuting mag-aaral",
+  "isCompleted": false
+}
+
+### get task with specific id (either admin or user)
+GET {{Quiz3API_HostAddress}}/api/tasks/1
+Authorization: Bearer {{UserToken}}
+
+### update task (admin only; 403 error)
+PUT {{Quiz3API_HostAddress}}/api/tasks/1
+Authorization: Bearer {{UserToken}}
+Content-Type: application/json
+{
+  "title": "Maging mabuting mag-aaral (updated)",
   "isCompleted": true
 }
 
-###
-PUT {{Quiz3API_HostAddress}}/api/tasks/2
+### update task (admin only)
+PUT {{Quiz3API_HostAddress}}/api/tasks/1
 Authorization: Bearer {{AdminToken}}
 Content-Type: application/json
 {
-  "title": "Updated Task 1",
+  "title": "Maging mabuting mag-aaral (updated)",
   "isCompleted": true
 }
 
-###
+### delete task (admin only; 403 error)
+DELETE {{Quiz3API_HostAddress}}/api/tasks/1
+Authorization: Bearer {{UserToken}}
+
+### delete task (admin only)
 DELETE {{Quiz3API_HostAddress}}/api/tasks/1
 Authorization: Bearer {{AdminToken}}
+
+###
