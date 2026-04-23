@@ -50,7 +50,7 @@ builder.Services.AddRateLimiter(options =>
 
         var apiKey = context.Request.Headers["X-API-Key"].ToString();
         return RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: apiKey ?? "anonymous",
+            partitionKey: role ?? "anonymous",
             factory: _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = limit,
@@ -64,13 +64,13 @@ builder.Services.AddRateLimiter(options =>
 
         int limit = role switch
         {
-            "Admin" => 30, //30 requests for admin
-            _ => 10 //10 requests for everyone else
+            "Admin" => 4, //30 requests for admin
+            _ => 2 //10 requests for everyone else
         };
 
         var apiKey = context.Request.Headers["X-API-Key"].ToString();
         return RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: apiKey ?? "anonymous",
+            partitionKey: role ?? "anonymous",
             factory: _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = limit,

@@ -1,15 +1,15 @@
 @Quiz3API_HostAddress = http://localhost:5269
-@AdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNzc2OTQwODczLCJleHAiOjE3NzY5NDQ0NzMsImlhdCI6MTc3Njk0MDg3M30.LbZLLgedd48jTOhq8tGOxfK_DhsLqwFblbGdw36NOuw
-@UserToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imt1cnQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc3Njk0MDg0OCwiZXhwIjoxNzc2OTQ0NDQ4LCJpYXQiOjE3NzY5NDA4NDh9.P0PQprPECV9fg6nllMrijyRd7iruc_bQ5N-3wVCEZiY
+@AdminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNzc2OTQ3OTc5LCJleHAiOjE3NzY5NDgyNzksImlhdCI6MTc3Njk0Nzk3OX0.meuznwVUM89qXElPhYpju2NhxuFYHq9G5b7qh3ri4bg
+@UserToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXIiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc3Njk0Nzk5MSwiZXhwIjoxNzc2OTQ4MjkxLCJpYXQiOjE3NzY5NDc5OTF9.KHtxw-YFRoXNF_O_nEDDH_jECKkwxMf4a662su4Jn5A
 
 ###
 
-POST {{Quiz3API_HostAddress}}/api/auth/Login
+POST {{Quiz3API_HostAddress}}/api/auth/login
 X-API-KEY: MYAPIKEY
 Content-Type: application/json
 
 {
-  "username": "kurt",
+  "username": "user",
   "password": "1234"
 }
 
@@ -20,23 +20,27 @@ Authorization: Bearer {{AdminToken}}
 ###
 
 GET {{Quiz3API_HostAddress}}/api/tasks/1
-Authorization: Bearer {{AdminToken}}
+Authorization: Bearer {{UserToken}}
 
 ###
 
 POST {{Quiz3API_HostAddress}}/api/tasks
-Authorization: Bearer {{AdminToken}}
+Authorization: Bearer {{UserToken}}
 Content-Type: application/json
 {
-  "title": "New Task 2",
+  "title": "New Task 3",
   "isCompleted": true
 }
 
 ###
-PUT {{Quiz3API_HostAddress}}/api/tasks/1
+PUT {{Quiz3API_HostAddress}}/api/tasks/2
 Authorization: Bearer {{AdminToken}}
 Content-Type: application/json
 {
   "title": "Updated Task 1",
   "isCompleted": true
 }
+
+###
+DELETE {{Quiz3API_HostAddress}}/api/tasks/1
+Authorization: Bearer {{AdminToken}}

@@ -13,7 +13,7 @@ namespace Quiz3API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly JwtService _jwtService = new JwtService();
-        [HttpPost("Login")]
+        [HttpPost("login")]
         [APIKeyAuthorize]
         [EnableRateLimiting("LoginPolicy")]
         public IActionResult Login([FromBody] LoginModel model)

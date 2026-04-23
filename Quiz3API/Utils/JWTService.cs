@@ -33,8 +33,6 @@ namespace Quiz3API.Utils
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            //return tokenHandler.WriteToken(token);
-
             return new AuthResponse
             {
                 UserName = username,
